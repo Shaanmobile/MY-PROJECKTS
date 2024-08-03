@@ -1,0 +1,114 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <title>CRICKET GAME</title>
+    <link rel="stylesheet" href="CRICKET.CSS">
+</head>
+
+<body>
+    <header class="header-container">
+        <nav>Cricket Game</nav>
+    </header>
+    <main>
+
+        <button class="user-choise" onclick="
+        let computerChoise = GenerateComputerChoise();
+             result = getResult(`Bat`,computerChoise);
+             finalResult(`Bat`,computerChoise,result);
+            ">Bat</button>
+
+        <button class="user-choise" onclick="
+             computerChoise = GenerateComputerChoise();
+             result = getResult(`Ball`,computerChoise);
+             finalResult(`Ball`,computerChoise,result);
+             ">Ball</button>
+
+        <button class="user-choise" onclick="
+             computerChoise = GenerateComputerChoise();
+             result = getResult(`Stamp`,computerChoise);
+             finalResult(`Stamp`,computerChoise,result);
+
+             ">Stamp</button>
+
+    </main>
+    <script>
+        let scoreStr =localStorage.getItem('Score');
+
+        let score = {
+
+            win: 0,
+            lost: 0,
+            tai: 0,
+            displayScore:function() {
+
+                return `Final Score: Won= ${score.win} , Lost= ${score.lost} , Tai= ${score.tai}`;
+            }
+        };
+        localStorage.setItem('Score',JSON.parse(score))
+        function GenerateComputerChoise() {
+            let randomNumbar = Math.random() * 3;
+            if (randomNumbar > 0 && randomNumbar <= 1) {
+                return 'Bat';
+            } else if (randomNumbar > 1 && randomNumbar <= 2) {
+                return 'Ball';
+            } else {
+                return 'Stamp';
+            }
+        }
+        function getResult(userMove, computerMove) {
+            if (userMove === 'Bat') {
+                if (computerMove === 'Bat') {
+                    score.tai++
+                    return `Is's a tai`
+                } else if (computerMove === 'Ball') {
+                    score.win++
+                    return `User Won`
+                } else if (computerMove === 'Stamp') {
+                    score.lost++
+                    return `Computer has Won`
+                }
+            } else if (userMove === 'Ball') {
+                if (computerMove === 'Ball') {
+                    score.tai++
+                    return `Is's a tai`
+                } else if (computerMove === 'Stamp') {
+                    score.win++
+                    return `User Won`
+                } else if (computerMove === 'Bat') {
+                    score.lost++
+                    return `Computer has Won`
+                }
+            } else if (userMove === 'Stamp') {
+                if (computerMove === 'Stamp') {
+                    score.tai++
+                    return `Is's a tai`
+                } else if (computerMove === 'Ball') {
+                    score.win++
+                    return `Computer has Won`
+                } else if (computerMove === 'Bat') {
+                    score.lost++
+                    return `User Won`
+                }
+            }
+        }
+
+function finalResult(userMove, computerMove, result) {
+
+localStorage.setItem('Score',JSON.stringify(score))
+
+alert(`you choone a ${userMove}.
+
+Computer Choise is ${computerMove}
+
+${result} 
+
+${score.displayScore()}
+
+`);
+
+}
+    </script>
+</body>
+
+</html>
